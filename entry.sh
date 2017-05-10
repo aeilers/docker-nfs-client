@@ -1,6 +1,7 @@
 #! /bin/sh -e
 
 mkdir -p "$MOUNTPOINT"
+chmod go+rw "$MOUNTPOINT"
 
 if [$SERVER == ""]; then
 rpc.statd & rpcbind -f & echo "docker NFS client with rpcbind ENABLED... if you wish to mount the mountpoint in this container USE THE FOLLOWING SYNTAX instead:
