@@ -13,7 +13,7 @@ write_files:
 rancher:
   services:
     nfs:
-      image: d3fk/nfs-client
+      image: fincaminimo/docker-nfs-client
       labels:
         io.rancher.os.after: console, preload-user-images
         io.rancher.os.scope: system
@@ -22,7 +22,10 @@ rancher:
       restart: always
       volumes:
       - /usr/bin/iptables:/sbin/iptables:ro
-      - /mnt/nfs-1:/mnt/nfs-1:shared
+      - /mnt/efs:/mnt/nfs-1:shared
       environment:
-        SERVER: X.X.X.X
-        SHARE: /shared_path
+        SERVER: fs-bf32fd76.efs.eu-west-1.amazonaws.com
+        SHARE: /
+        MOUNTPOINT: /mnt/efs
+        FS_TYPE: nfs4
+        MOUNT_OPTIONS: nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2
