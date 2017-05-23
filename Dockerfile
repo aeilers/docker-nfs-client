@@ -8,8 +8,8 @@ ENV FSTYPE="nfs4" \
 RUN apk update \
     && apk add --update nfs-utils \
     && rm -rf /var/cache/apk/* \
-    && rm -f /sbin/halt /sbin/poweroff /sbin/reboot
+    && rm /sbin/halt /sbin/poweroff /sbin/reboot
 
-COPY entry.sh /usr/local/bin/entry.sh
+ADD entry.sh /usr/local/bin/entry.sh
 
 ENTRYPOINT ["/usr/local/bin/entry.sh"]
