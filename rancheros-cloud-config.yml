@@ -1,31 +1,20 @@
 #cloud-config
 
-# /var/lib/rancher/conf/cloud-config.d/nfs.yml
-
-# https://github.com/rancher/os/issues/641
-write_files:
-  - path: /etc/rc.local
-    permissions: "0755"
-    content: |
-      #!/bin/bash
-      [ ! -e /usr/bin/docker ] && ln -s /usr/bin/docker.dist /usr/bin/docker
-
+# example to use nfs storage client
 rancher:
   services:
     nfs:
-      image: fincaminimo/docker-nfs-client
+      image: aeilers/docker-nfs-client
       labels:
-        io.rancher.os.after: console, preload-user-images
+        io.rancher.os.after: console
         io.rancher.os.scope: system
       net: host
       privileged: true
       restart: always
       volumes:
       - /usr/bin/iptables:/sbin/iptables:ro
-      - /mnt/efs:/mnt/nfs-1:shared
       environment:
-        SERVER: fs-bf32fd76.efs.eu-west-1.amazonaws.com
-        SHARE: /
-        MOUNTPOINT: /mnt/efs
-        FSTYPE: nfs4
-        MOUNT_OPTIONS: nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2
+        SERVER: 172.16.0.2
+        SHARE: /share/location
+mounts:
+  - ["172.16.0.2:/share/location", "/mnt/nfs", "nfs", ""]
