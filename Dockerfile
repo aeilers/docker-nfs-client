@@ -1,9 +1,9 @@
 FROM alpine:3.5
 MAINTAINER Adam Eilers <adam.eilers@gmail.com>
 
-ENV FSTYPE nfs4 \
-    MOUNT_OPTIONS nfsvers=4,rw \
-    MOUNTPOINT /mnt/nfs
+ENV FSTYPE="nfs4" \
+    MOUNT_OPTIONS="nfsvers=4" \
+    MOUNTPOINT="/mnt/nfs"
 
 RUN apk update \
     && apk add --update nfs-utils \
