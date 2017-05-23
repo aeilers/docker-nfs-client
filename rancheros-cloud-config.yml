@@ -13,8 +13,5 @@ rancher:
       restart: always
       volumes:
       - /usr/bin/iptables:/sbin/iptables:ro
-      environment:
-        SERVER: 172.16.0.2
-        SHARE: /share/location
 mounts:
   - ["172.16.0.2:/share/location", "/mnt/nfs", "nfs", ""]
