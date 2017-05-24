@@ -6,7 +6,7 @@ ENV FSTYPE="nfs4" \
     MOUNTPOINT="/mnt/nfs"
 
 RUN apk update \
-    && apk add --update nfs-utils \
+    && apk add nfs-utils \
     && rm -rf /var/cache/apk/* \
     && rm /sbin/halt /sbin/poweroff /sbin/reboot
 

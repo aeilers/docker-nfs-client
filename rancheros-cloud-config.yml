@@ -1,6 +1,7 @@
 #cloud-config
 
-# example to use nfs storage client
+# example use of nfs storage client
+# add additional configuration options or integrate with existing cloud-config
 rancher:
   services:
     nfs:
@@ -12,9 +13,13 @@ rancher:
       privileged: true
       restart: always
       volumes:
-      - /usr/bin/iptables:/sbin/iptables:ro
+        - /usr/bin/iptables:/sbin/iptables:ro
+        - /mnt/data0:/mnt/data0:shared
+        - /mnt/data1:/mnt/data1:shared
       environment:
+        # required to establish an initial connection
         SERVER: 172.16.0.2
-        SHARE: /share/location
+        SHARE: /share/location0
 mounts:
-  - ["172.16.0.2:/share/location", "/mnt/nfs", "nfs", ""]
+  - ["172.16.0.2:/share/location0", "/mnt/data0", "nfs", ""]
+  - ["172.16.0.2:/share/location1", "/mnt/data1", "nfs", ""]
